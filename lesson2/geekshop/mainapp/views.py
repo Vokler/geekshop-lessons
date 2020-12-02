@@ -25,6 +25,10 @@ def test_context(request):
             {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': '6 090,00 руб.'},
             {'name': 'Синяя куртка The North Face', 'price': '23 725,00 руб.'},
             {'name': 'Коричневый спортивный oversized-топ ASOS DESIGN', 'price': '3 390,00 руб.'},
+        ],
+        'promotion': True,
+        'products_of_promotion': [
+            {'name': 'Черный рюкзак Nike Heritage', 'price': '2 340,00 руб.'},
         ]
     }
     return render(request, 'mainapp/test_context.html', context)
