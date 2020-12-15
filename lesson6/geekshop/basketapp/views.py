@@ -21,5 +21,9 @@ def basket_add(request, id=None):
 
 def basket_remove(request, id=None):
     basket = Basket.objects.get(id=id)
+    if basket.quantity > 1:
+        basket.quantity -= 1
+        basket.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     basket.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
