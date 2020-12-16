@@ -49,8 +49,6 @@ def profile(request):
     context = {
         'title': 'Профиль', 'form': form,
         'baskets': baskets,
-        'total_sum': sum(basket.sum() for basket in baskets),
-        'total_quantity': sum(basket.quantity for basket in baskets),
     }
     return render(request, 'authapp/profile.html', context)
 
