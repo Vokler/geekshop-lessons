@@ -58,7 +58,11 @@
             </div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-success">Создать пользователя</button>
+            <button class="btn btn-success">
+                <a href="{% url 'admin_staff:admin_users_create' %}" style="color: white;">
+                    Создать пользователя
+                </a>
+            </button>
         </div>
     </div>
 {% endblock %}
