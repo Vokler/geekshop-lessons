@@ -47,3 +47,11 @@ def admin_users_update(request, user_id):
 
     context = {'form': form, 'user': user}
     return render(request, 'adminapp/admin-users-update-delete.html', context)
+
+
+def admin_users_remove(request, user_id):
+    user = User.objects.get(id=user_id)
+    # user.delete()
+    user.is_active = False
+    user.save()
+    return HttpResponseRedirect(reverse('admin_staff:admin_users'))
