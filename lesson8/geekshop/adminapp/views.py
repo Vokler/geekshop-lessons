@@ -38,6 +38,12 @@ class UsersUpdateView(UpdateView):
     success_url = reverse_lazy('admin_staff:admin_users')
     form_class = UserAdminProfileForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'GeekShop - Редактирование пользователя'
+
+        return context
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users_remove(request, user_id):
