@@ -5,10 +5,22 @@ from django.contrib.auth.decorators import user_passes_test
 from authapp.models import User
 from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm
 
+from django.views.generic.list import ListView
+from django.utils.decorators import method_decorator
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def index(request):
     return render(request, 'adminapp/index.html')
+
+
+class UsersListView(ListView):
+    model = User
+    template_name = 'adminapp/admin-users-read.html'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 
 # Следующие контроллеры демонстрируют принцип CRUD
@@ -26,15 +38,6 @@ def admin_users_create(request):
         form = UserAdminRegisterForm()
     context = {'form': form}
     return render(request, 'adminapp/admin-users-create.html', context)
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def admin_users(request):
-    # R - Read
-    context = {
-        'users': User.objects.all(),
-    }
-    return render(request, 'adminapp/admin-users-read.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
