@@ -32,20 +32,11 @@ class UsersCreateView(CreateView):
     form_class = UserAdminRegisterForm
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def admin_users_update(request, user_id):
-    # U - Update
-    user = User.objects.get(id=user_id)
-    if request.method == 'POST':
-        form = UserAdminProfileForm(data=request.POST, files=request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('admin_staff:admin_users'))
-    else:
-        form = UserAdminProfileForm(instance=user)
-
-    context = {'form': form, 'user': user}
-    return render(request, 'adminapp/admin-users-update-delete.html', context)
+class UsersUpdateView(UpdateView):
+    model = User
+    template_name = 'adminapp/admin-users-update-delete.html'
+    success_url = reverse_lazy('admin_staff:admin_users')
+    form_class = UserAdminProfileForm
 
 
 @user_passes_test(lambda u: u.is_superuser)
