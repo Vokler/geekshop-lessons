@@ -7,6 +7,8 @@ from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm
 
 from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -23,21 +25,11 @@ class UsersListView(ListView):
         return super().dispatch(*args, **kwargs)
 
 
-# Следующие контроллеры демонстрируют принцип CRUD
-@user_passes_test(lambda u: u.is_superuser)
-def admin_users_create(request):
-    # C - Create
-    if request.method == 'POST':
-        form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('admin_staff:admin_users'))
-        else:
-            print(form.errors)
-    else:
-        form = UserAdminRegisterForm()
-    context = {'form': form}
-    return render(request, 'adminapp/admin-users-create.html', context)
+class UsersCreateView(CreateView):
+    model = User
+    template_name = 'adminapp/admin-users-create.html'
+    success_url = reverse_lazy('admin_staff:admin_users')
+    form_class = UserAdminRegisterForm
 
 
 @user_passes_test(lambda u: u.is_superuser)
