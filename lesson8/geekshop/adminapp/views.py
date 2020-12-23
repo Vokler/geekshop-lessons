@@ -1,14 +1,12 @@
 from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
-
-from authapp.models import User
-from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm
-
 from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+
+from authapp.models import User
+from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm
 
 
 @user_passes_test(lambda u: u.is_superuser)
