@@ -1,4 +1,9 @@
+import os
+import json
+
 from django.shortcuts import render
+
+module_dir = os.path.dirname(__file__)
 
 
 def main(request):
@@ -31,4 +36,8 @@ def test_context(request):
             {'name': 'Черный рюкзак Nike Heritage', 'price': '2 340,00 руб.'},
         ]
     }
+
+    # Домашняя работа
+    file_path = os.path.join(module_dir, 'fixtures/products.json')
+    context.update(json.load(open(file_path, encoding='utf-8')))
     return render(request, 'mainapp/test_context.html', context)
