@@ -39,5 +39,5 @@ def test_context(request):
 
     # Домашняя работа
     file_path = os.path.join(module_dir, 'fixtures/products.json')
-    context.update(json.load(open(file_path, encoding='utf-8')))
+    context['products'] = json.load(open(file_path, encoding='utf-8'))
     return render(request, 'mainapp/test_context.html', context)
